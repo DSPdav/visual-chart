@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './fonts/GTWalsheimProRegular.ttf';
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
