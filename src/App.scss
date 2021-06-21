@@ -223,6 +223,7 @@ table.table {
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
+      cursor: pointer;
 
       &:checked {
         background-color: #4339F2;
@@ -231,6 +232,9 @@ table.table {
         background-position: center;
         background-size: 1vw;
       }
+    }
+    label {
+      cursor: pointer;
     }
   }
 

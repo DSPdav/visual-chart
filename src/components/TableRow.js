@@ -2,16 +2,31 @@ import { useEffect, useState } from 'react';
 import '../App.scss';
 import { useTableItems } from '../context/TableItemsContext';
 
-function TableRow({ item }) {
+function TableRow({ item, onSelectAll }) {
   const [ selected, setSelected ] = useState(false);
-  const { dispatch } = useTableItems();
+  const { state, dispatch } = useTableItems();
   const handleSelect = (id) => {
-    setSelected(!selected);
-    dispatch({
-      type: 'SELECT',
-      payload: { id, selected: !selected }
-    });
+    if (selected) {
+      dispatch({
+        type: 'UNSELECT',
+        payload: { id }
+      });
+      setSelected(false);
+    } else {
+      dispatch({
+        type: 'SELECT',
+        payload: { id }
+      });
+      setSelected(true);
+    }
   }
+
+  const len = state.items.filter(item=> item.selected === true).length
+
+  useEffect(() => {
+    (len === state.items.length) && onSelectAll(true);
+    (len === state.items.length - 1) && onSelectAll(false);
+  }, [len])
 
   useEffect(() => {
     setSelected(item.selected);

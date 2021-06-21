@@ -6,16 +6,17 @@ import TableRow from './TableRow';
 function Table() {
   const [ selected, setSelected ] = useState(false);
   const { state, dispatch } = useTableItems();
-  const displayTableRow = state.items.map(table => (
-    <Fragment key={table.id}>
-      <TableRow item={ table } />
-    </Fragment>
-  ));
-
+  
   const handleSelectAll = () => {
     setSelected(!selected);
     selected ? dispatch({type: 'UNSELECT_ALL'}) : dispatch({type: 'SELECT_ALL'});
   }
+
+  const displayTableRow = state.items.map(table => (
+    <Fragment key={table.id}>
+      <TableRow item={ table } onSelectAll={ setSelected } />
+    </Fragment>
+  ));
 
   return (
     <table className="table" cellSpacing="0" cellPadding="0">

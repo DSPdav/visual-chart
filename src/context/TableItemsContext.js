@@ -37,40 +37,44 @@ const tableItems = [
 
 const initState = {
   items: tableItems,
-  selectedItems: []
 }
 
 function tableItemsReducer(state, action) {
   switch (action.type) {
     case 'SELECT_ALL':
-      state.items = state.items.map(item => ({
-        ...item,
-        selected: true
-      }));
-      state.selectedItems = state.items.filter(item => item.selected === true).map(item => item.id);
-      return state;
+      return {
+        items: state.items.map(item => ({
+          ...item,
+          selected: true
+        })),
+      };
 
     case 'UNSELECT_ALL':
-      state.items = state.items.map(item => ({
-        ...item,
-        selected: false
-      }));
-      state.selectedItems = [];
-      return state;
+      return {
+        items: state.items.map(item => ({
+          ...item,
+          selected: false
+        })),
+      };
       
     case 'SELECT':
-      state.items = state.items.map(item => {
-        if (item.id === action.payload.id) {
-          return { ...item, selected: action.payload.selected };
-        } else {
-          return item;
-        }
-      });
-      state.selectedItems = state.items.filter(item => item.selected === true).map(item => item.id);
-      return state;
+      return {
+        items: state.items.map(item => {
+          return (item.id === action.payload.id) ? { ...item, selected: true } : item;
+        }),
+      };
+    
+    case 'UNSELECT':
+      return {
+        items: state.items.map(item => {
+          return (item.id === action.payload.id) ? { ...item, selected: false } : item;
+        }),
+      };
     
     case 'DELETE':
-      return state.tableItems.filter(item => item.selected === false);
+      return {
+        items: state.items.filter(item => item.selected === false)
+      };
   
     default:
       return;
